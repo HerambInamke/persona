@@ -248,22 +248,22 @@ const StartLights = ({ difficulty, onResult, carNumber }) => {
         )}
       </AnimatePresence>
 
-      {/* Gantry Lights - Top Center with realistic styling */}
+      {/* Gantry Lights - Top Center with F1-style vertical housings */}
       <div className="absolute top-0 left-0 right-0 flex justify-center pt-8 z-40">
         <motion.div
           animate={shake ? { x: [0, -3, 3, -3, 3, 0] } : {}}
           transition={{ duration: 0.2 }}
         >
-          {/* Metallic housing */}
+          {/* Main gantry structure */}
           <div 
-            className="relative px-10 py-8 rounded-xl"
+            className="relative px-8 py-6 rounded-lg"
             style={{
-              background: 'linear-gradient(180deg, #2d3748 0%, #1a202c 50%, #0f1419 100%)',
-              boxShadow: '0 10px 40px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.1)',
-              border: '2px solid #374151'
+              background: 'linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%)',
+              boxShadow: '0 10px 40px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.05)',
+              border: '2px solid #2a2a2a'
             }}
           >
-            <div className="flex justify-center gap-5">
+            <div className="flex justify-center gap-6">
               {lights.map((isOn, index) => (
                 <motion.div
                   key={index}
@@ -272,33 +272,59 @@ const StartLights = ({ difficulty, onResult, carNumber }) => {
                   transition={{ delay: index * 0.05, type: 'spring', stiffness: 200 }}
                   className="relative"
                 >
-                  {/* LED Light with glass effect */}
+                  {/* Vertical light housing */}
                   <div
-                    className="relative w-24 h-24 rounded-full transition-all duration-150"
+                    className="relative rounded-lg overflow-hidden"
                     style={{
-                      background: gamePhase === 'go' && isOn
-                        ? 'radial-gradient(circle at 30% 30%, #86efac 0%, #22c55e 40%, #15803d 100%)'
-                        : isOn
-                        ? 'radial-gradient(circle at 30% 30%, #fca5a5 0%, #dc2626 40%, #991b1b 100%)'
-                        : 'radial-gradient(circle at 30% 30%, #374151 0%, #1f2937 60%, #111827 100%)',
-                      boxShadow: gamePhase === 'go' && isOn
-                        ? '0 0 30px rgba(34, 197, 94, 0.8), 0 0 60px rgba(34, 197, 94, 0.5), inset 0 -4px 8px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.3)'
-                        : isOn
-                        ? '0 0 30px rgba(220, 38, 38, 0.8), 0 0 60px rgba(220, 38, 38, 0.5), inset 0 -4px 8px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.3)'
-                        : 'inset 0 4px 8px rgba(0,0,0,0.6), inset 0 -2px 4px rgba(255,255,255,0.05)',
-                      border: isOn ? '3px solid rgba(255,255,255,0.2)' : '3px solid rgba(0,0,0,0.4)'
+                      width: '70px',
+                      height: '140px',
+                      background: 'linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 50%, #0a0a0a 100%)',
+                      boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.8), 0 4px 12px rgba(0,0,0,0.6)',
+                      border: '2px solid #1a1a1a'
                     }}
                   >
-                    {/* Glass reflection highlight */}
-                    {isOn && (
+                    {/* Top decorative bars */}
+                    <div className="absolute top-2 left-2 right-2 h-1 bg-gray-600 opacity-50"></div>
+                    <div className="absolute top-5 left-2 right-2 h-1 bg-gray-600 opacity-50"></div>
+                    
+                    {/* Circular light in center */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                       <div
-                        className="absolute top-2 left-2 w-8 h-8 rounded-full"
+                        className="relative rounded-full transition-all duration-150"
                         style={{
-                          background: 'radial-gradient(circle at center, rgba(255,255,255,0.6) 0%, transparent 70%)',
-                          filter: 'blur(2px)'
+                          width: '52px',
+                          height: '52px',
+                          background: gamePhase === 'go' && isOn
+                            ? 'radial-gradient(circle at 35% 35%, #86efac 0%, #22c55e 30%, #15803d 100%)'
+                            : isOn
+                            ? 'radial-gradient(circle at 35% 35%, #fca5a5 0%, #dc2626 30%, #991b1b 100%)'
+                            : 'radial-gradient(circle at 35% 35%, #2a2a2a 0%, #1a1a1a 60%, #0a0a0a 100%)',
+                          boxShadow: gamePhase === 'go' && isOn
+                            ? '0 0 25px rgba(34, 197, 94, 0.9), 0 0 50px rgba(34, 197, 94, 0.6), inset 0 -3px 6px rgba(0,0,0,0.4), inset 0 2px 3px rgba(255,255,255,0.3)'
+                            : isOn
+                            ? '0 0 25px rgba(220, 38, 38, 0.9), 0 0 50px rgba(220, 38, 38, 0.6), inset 0 -3px 6px rgba(0,0,0,0.4), inset 0 2px 3px rgba(255,255,255,0.3)'
+                            : 'inset 0 3px 6px rgba(0,0,0,0.8), inset 0 -2px 3px rgba(255,255,255,0.02)',
+                          border: isOn ? '2px solid rgba(255,255,255,0.15)' : '2px solid rgba(0,0,0,0.5)'
                         }}
-                      />
-                    )}
+                      >
+                        {/* Glass reflection highlight */}
+                        {isOn && (
+                          <div
+                            className="absolute top-1 left-1 rounded-full"
+                            style={{
+                              width: '18px',
+                              height: '18px',
+                              background: 'radial-gradient(circle at center, rgba(255,255,255,0.7) 0%, transparent 70%)',
+                              filter: 'blur(1px)'
+                            }}
+                          />
+                        )}
+                      </div>
+                    </div>
+                    
+                    {/* Bottom decorative bars */}
+                    <div className="absolute bottom-5 left-2 right-2 h-1 bg-gray-600 opacity-50"></div>
+                    <div className="absolute bottom-2 left-2 right-2 h-1 bg-gray-600 opacity-50"></div>
                   </div>
                   
                   {/* Extended bloom glow */}
@@ -306,13 +332,14 @@ const StartLights = ({ difficulty, onResult, carNumber }) => {
                     <motion.div
                       animate={{ opacity: [0.4, 0.7, 0.4] }}
                       transition={{ duration: 1, repeat: Infinity, ease: 'easeInOut' }}
-                      className="absolute inset-0 rounded-full"
+                      className="absolute inset-0"
                       style={{
                         background: gamePhase === 'go' 
-                          ? 'radial-gradient(circle, rgba(34, 197, 94, 0.6) 0%, transparent 70%)'
-                          : 'radial-gradient(circle, rgba(220, 38, 38, 0.6) 0%, transparent 70%)',
-                        filter: 'blur(20px)',
-                        transform: 'scale(1.8)'
+                          ? 'radial-gradient(ellipse, rgba(34, 197, 94, 0.6) 0%, transparent 70%)'
+                          : 'radial-gradient(ellipse, rgba(220, 38, 38, 0.6) 0%, transparent 70%)',
+                        filter: 'blur(25px)',
+                        transform: 'scale(1.8)',
+                        pointerEvents: 'none'
                       }}
                     />
                   )}
