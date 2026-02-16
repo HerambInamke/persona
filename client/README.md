@@ -1,52 +1,72 @@
-# F1 Reaction Championship 🏎️
+# F1 Launch Control 🏎️
 
-A realistic Formula 1 start lights reaction game with competitive tournament mechanics and leaderboard tracking.
+A realistic Formula 1 launch control game with authentic race grid visuals, gantry lights, and hold-to-release mechanics.
 
 ## Features
 
 ### Core Mechanics
-- 5 sequential red start lights with realistic F1 broadcast styling
-- Random delay before lights out (unpredictable timing)
-- Precise reaction time measurement using `performance.now()`
-- False start detection
-- Space bar or click to react
+- **Hold-to-Release Gameplay**: Hold space/click before lights sequence, release on green
+- 5 sequential red gantry lights above track
+- Lights turn GREEN after random delay
+- Measure reaction time from green signal to release
+- False start detection if released too early
+- Perfect launch bonus for sub-200ms reactions
 
-### Unique Mechanics
-1. **Random Fake Flicker**: During the waiting phase, lights randomly flicker to test discipline
-2. **Difficulty Modes**:
-   - **Normal**: Standard timing with light flickers
-   - **Hard**: Faster light sequence, more flickers
-   - **Chaos**: Extended delays, multiple flickers, screen shake effects
-3. **Tournament Mode**: 5-round tournaments with average scoring
+### Visual Design
+- Realistic F1 race track with perspective
+- Single car positioned on starting grid
+- F1-style gantry lights at top center
+- Starting grid lines and track markings
+- Asphalt texture and track boundaries
+- Smooth car acceleration animation
+- Tire smoke effect on perfect launches
+- Broadcast-style overlays
+
+### Game Mechanics
+1. **Hold Phase**: Player must hold before lights start
+2. **Light Sequence**: 5 red lights illuminate sequentially
+3. **Random Delay**: Unpredictable wait time (2-5 seconds)
+4. **Fake Flickers**: Random light flickers to test discipline
+5. **Green Signal**: All lights turn green simultaneously
+6. **Release**: Player releases to launch
+7. **Result**: Reaction time measured in milliseconds
 
 ### Player System
-- Driver name and car number (1-99) registration
-- Difficulty mode selection
-- Session-based player identity
+- Phone number registration
+- Driver name
+- Car number (1-99)
+- Session-based identity
+
+### Tournament Mode
+- 5 rounds per tournament
+- Track each round reaction time
+- False starts count as disqualified rounds
+- Final score = average of valid rounds
+- Tournament invalid if 2+ false starts
 
 ### Leaderboard
-- Persistent localStorage-based leaderboard
-- Tracks:
-  - Best single reaction time
-  - Best tournament average (5 rounds)
-  - False start count
-  - Total attempts
-- Filter by difficulty mode
-- Sort priority: Tournament average > Single reaction > False starts
-- Tournament invalidation after 2+ false starts
+- Best single launch reaction
+- Best tournament average (5 rounds)
+- False start count
+- Total launches
+- Persistent localStorage (ready for MongoDB)
+- Sort by tournament avg > single best > false starts
 
-### Broadcast-Style UI
-- Dark gradient background
-- Circular LED-style red lights with glow effects
-- Professional F1 typography
-- Smooth animations with Framer Motion
-- Round indicators and status overlays
+### Broadcast UI Overlays
+- Top Left: "F1 Launch Control" + Driver info
+- Top Right: Round counter
+- Center Flash: Status messages (FALSE START, PERFECT LAUNCH, etc.)
+- Bottom: Reaction time display
 
 ### Audio
-- Light activation sounds
-- "Lights out" audio cue
-- False start warning sound
-- Web Audio API-based sound generation
+- Light activation beeps
+- Green signal sound
+- False start buzzer
+- Web Audio API synthesis
+
+### Anti-Cheat
+- Rejects reaction times under 80ms
+- Server-side validation ready
 
 ## Tech Stack
 
@@ -73,21 +93,23 @@ Open your browser to `http://localhost:5173`
 
 ## How to Play
 
-1. Enter your driver name and car number
-2. Select difficulty mode
-3. Click "START CHAMPIONSHIP" to begin
-4. Watch the 5 red lights illuminate sequentially
-5. Wait for all lights to go out (don't jump!)
-6. Press SPACE or click immediately when lights go out
-7. Complete 5 rounds for a tournament score
-8. View your results on the leaderboard
+1. Enter phone number, driver name, and car number
+2. Click "START CHAMPIONSHIP"
+3. Click "START LAUNCH" to begin round
+4. **HOLD** space bar or mouse button
+5. Watch the red lights illuminate
+6. Wait for lights to turn GREEN
+7. **RELEASE** immediately when green
+8. Complete 5 rounds for tournament score
+9. View leaderboard
 
 ## Game Rules
 
-- Reaction times under 80ms are rejected as impossible (anti-cheat)
-- False starts occur if you react before lights go out
-- Tournament is invalid if you have more than 2 false starts
-- Leaderboard prioritizes tournament average over single best time
+- Must hold before lights sequence begins
+- Release before green = False Start
+- Reaction times under 80ms rejected (anti-cheat)
+- Tournament invalid if 2+ false starts
+- Perfect launch bonus for sub-200ms reactions
 
 ## Project Structure
 
@@ -97,7 +119,7 @@ client/
 │   ├── components/
 │   │   ├── StartForm.jsx          # Player registration
 │   │   ├── GameController.jsx     # Main game state manager
-│   │   ├── StartLights.jsx        # Light sequence & timing logic
+│   │   ├── StartLights.jsx        # Track scene & timing logic
 │   │   ├── TournamentSummary.jsx  # Results display
 │   │   └── LeaderboardTable.jsx   # Leaderboard UI
 │   ├── hooks/
@@ -110,26 +132,24 @@ client/
 └── vite.config.js
 ```
 
-## Future Enhancements (Backend Integration)
+## Performance
 
-When backend is ready:
-- Replace localStorage with MongoDB via REST API
-- Add endpoints:
-  - `POST /api/submit-score`
-  - `GET /api/leaderboard`
-  - `GET /api/leaderboard/:difficulty`
-- Server-side validation and anti-cheat
-- Global leaderboard across all players
-- Player authentication
-- National flags and profile customization
-
-## Performance Notes
-
-- Uses `requestAnimationFrame` for smooth animations
+- Uses `performance.now()` for precise timing
+- `requestAnimationFrame` for smooth animations
 - Proper cleanup of timers and event listeners
 - No memory leaks
-- Optimized re-renders with React hooks
+- Mobile compatible
+
+## Future Enhancements (Backend)
+
+- Replace localStorage with MongoDB
+- REST API endpoints
+- Server-side validation
+- Global leaderboard
+- Player authentication
+- National flags
 
 ## License
 
 MIT
+
