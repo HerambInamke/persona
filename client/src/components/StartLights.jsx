@@ -103,6 +103,7 @@ const StartLights = ({ difficulty, onResult, carNumber }) => {
     hasReleasedRef.current = false;
     setGamePhase('countdown');
 
+    // Turn on lights one by one
     lights.forEach((_, index) => {
       const timeout = setTimeout(() => {
         setLights(prev => {
@@ -116,14 +117,15 @@ const StartLights = ({ difficulty, onResult, carNumber }) => {
     });
 
     const allLightsOnDelay = lights.length * 350;
-    
+
     const waitTimeout = setTimeout(() => {
       setGamePhase('waiting');
-      
+
       const randomDelay = Math.random() * 3000 + 2000;
-      
+
       const goTimeout = setTimeout(() => {
-        setLights([true, true, true, true, true]);
+        // F1 authentic: All lights turn OFF for "GO"
+        setLights([false, false, false, false, false]);
         setGamePhase('go');
         setFlashMessage('LIGHTS OUT');
         startTimeRef.current = performance.now();
@@ -210,14 +212,10 @@ const StartLights = ({ difficulty, onResult, carNumber }) => {
                       style={{
                         width: '52px',
                         height: '52px',
-                        background: gamePhase === 'go' && isOn
-                          ? 'radial-gradient(circle at 35% 35%, #86efac 0%, #22c55e 30%, #15803d 100%)'
-                          : isOn
+                        background: isOn
                           ? 'radial-gradient(circle at 35% 35%, #fca5a5 0%, #dc2626 30%, #991b1b 100%)'
                           : 'radial-gradient(circle at 35% 35%, #2a2a2a 0%, #1a1a1a 60%, #0a0a0a 100%)',
-                        boxShadow: gamePhase === 'go' && isOn
-                          ? '0 0 25px rgba(34, 197, 94, 0.9), 0 0 50px rgba(34, 197, 94, 0.6)'
-                          : isOn
+                        boxShadow: isOn
                           ? '0 0 25px rgba(220, 38, 38, 0.9), 0 0 50px rgba(220, 38, 38, 0.6)'
                           : 'inset 0 3px 6px rgba(0,0,0,0.8)',
                         border: isOn ? '2px solid rgba(255,255,255,0.15)' : '2px solid rgba(0,0,0,0.5)'
