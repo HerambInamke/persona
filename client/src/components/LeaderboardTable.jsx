@@ -14,18 +14,28 @@ const LeaderboardTable = ({ onBack, currentPlayer }) => {
   }, []);
 
   const sortedData = [...leaderboard].sort((a, b) => {
-    // Sort by tournament average first (if exists)
+    // 1. Sort by tournament average first (lowest is best)
     if (a.bestTournamentAverage && b.bestTournamentAverage) {
-      return a.bestTournamentAverage - b.bestTournamentAverage;
+      if (a.bestTournamentAverage !== b.bestTournamentAverage) {
+        return a.bestTournamentAverage - b.bestTournamentAverage;
+      }
     }
-    if (a.bestTournamentAverage) return -1;
-    if (b.bestTournamentAverage) return 1;
+    if (a.bestTournamentAverage && !b.bestTournamentAverage) return -1;
+    if (!a.bestTournamentAverage && b.bestTournamentAverage) return 1;
     
-    // Then by best single reaction
+    // 2. Then by best single reaction (lowest is best)
     if (a.bestSingleReaction && b.bestSingleReaction) {
-      return a.bestSingleReaction - b.bestSingleReaction;
+      if (a.bestSingleReaction !== b.bestSingleReaction) {
+        return a.bestSingleReaction - b.bestSingleReaction;
+      }
     }
-    return 0;
+    if (a.bestSingleReaction && !b.bestSingleReaction) return -1;
+    if (!a.bestSingleReaction && b.bestSingleReaction) return 1;
+    
+    // 3. Finally by lowest false starts
+    const aFalseStarts = a.falseStarts || 0;
+    const bFalseStarts = b.falseStarts || 0;
+    return aFalseStarts - bFalseStarts;
   });
 
   return (

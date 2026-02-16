@@ -1,72 +1,71 @@
-# F1 Launch Control 🏎️
+# F1 Launch Control – Broadcast Edition 🏎️
 
-A realistic Formula 1 launch control game with authentic race grid visuals, gantry lights, and hold-to-release mechanics.
+A cinematic MERN stack F1 launch control game with realistic broadcast visuals, authentic race grid, and professional motorsport styling.
 
-## Features
+## Visual Features
 
-### Core Mechanics
-- **Hold-to-Release Gameplay**: Hold space/click before lights sequence, release on green
-- 5 sequential red gantry lights above track
-- Lights turn GREEN after random delay
-- Measure reaction time from green signal to release
-- False start detection if released too early
-- Perfect launch bonus for sub-200ms reactions
+### Realistic Gantry Lights
+- Metallic housing with gradient shading
+- 5 LED circular lenses with glass effect
+- Radial gradient lighting (red/green)
+- Inner glass reflection highlights
+- Extended bloom glow using layered shadows
+- Smooth color transitions
 
-### Visual Design
-- Realistic F1 race track with perspective
-- Single car positioned on starting grid
-- F1-style gantry lights at top center
-- Starting grid lines and track markings
-- Asphalt texture and track boundaries
-- Smooth car acceleration animation
-- Tire smoke effect on perfect launches
-- Broadcast-style overlays
+### Cinematic Track Design
+- Asphalt grain texture with noise overlay
+- Subtle vignette on screen edges
+- Light source gradient from top
+- Yellow center dashed line
+- White track boundaries
+- Starting grid markings
+- Perspective depth
 
-### Game Mechanics
-1. **Hold Phase**: Player must hold before lights start
-2. **Light Sequence**: 5 red lights illuminate sequentially
-3. **Random Delay**: Unpredictable wait time (2-5 seconds)
-4. **Fake Flickers**: Random light flickers to test discipline
-5. **Green Signal**: All lights turn green simultaneously
-6. **Release**: Player releases to launch
-7. **Result**: Reaction time measured in milliseconds
-
-### Player System
-- Phone number registration
-- Driver name
-- Car number (1-99)
-- Session-based identity
-
-### Tournament Mode
-- 5 rounds per tournament
-- Track each round reaction time
-- False starts count as disqualified rounds
-- Final score = average of valid rounds
-- Tournament invalid if 2+ false starts
-
-### Leaderboard
-- Best single launch reaction
-- Best tournament average (5 rounds)
-- False start count
-- Total launches
-- Persistent localStorage (ready for MongoDB)
-- Sort by tournament avg > single best > false starts
+### Enhanced F1 Car
+- Dynamic car number from player input
+- Idle engine vibration (2px jitter) while clutch held
+- Soft drop shadow beneath car
+- Heat haze effect behind rear
+- Dual tire smoke burst on perfect launches (<200ms)
+- Smooth acceleration with custom easing
+- Camera shake on launch
 
 ### Broadcast UI Overlays
-- Top Left: "F1 Launch Control" + Driver info
-- Top Right: Round counter
-- Center Flash: Status messages (FALSE START, PERFECT LAUNCH, etc.)
-- Bottom: Reaction time display
+- Top Left: Semi-transparent panel with "F1 LAUNCH CONTROL" + Driver info
+- Top Right: Round counter with red gradient
+- Center Flash: Large motorsport-style messages (FALSE START, PERFECT LAUNCH, LIGHTS OUT)
+- Condensed, bold typography
+- Minimal, professional styling
 
-### Audio
-- Light activation beeps
-- Green signal sound
-- False start buzzer
-- Web Audio API synthesis
+## Gameplay
 
-### Anti-Cheat
-- Rejects reaction times under 80ms
-- Server-side validation ready
+### Core Mechanics
+1. **Hold Phase**: Click anywhere or hold space to arm clutch
+2. **Light Sequence**: 5 red lights illuminate sequentially
+3. **Random Delay**: Unpredictable wait (2-5 seconds)
+4. **Fake Flickers**: Random light flickers to test discipline
+5. **Green Signal**: All lights turn green simultaneously
+6. **Release**: Click/release immediately to launch
+7. **Timing**: Reaction measured in milliseconds
+
+### Controls
+- **Click anywhere** on screen to start and release
+- **Space bar** to hold and release
+- Works on both desktop and mobile
+
+### Scoring
+- Reaction times under 80ms rejected (anti-cheat)
+- Perfect launch bonus for sub-200ms reactions
+- False start if released before green
+- Tournament mode: 5 rounds, average scoring
+- Tournament invalid if 2+ false starts
+
+## Player Registration
+
+Required fields:
+- Phone number
+- Driver name  
+- Car number (1-99) - displayed on car during race
 
 ## Tech Stack
 
@@ -74,7 +73,7 @@ A realistic Formula 1 launch control game with authentic race grid visuals, gant
 - **Tailwind CSS 4** for styling
 - **Framer Motion** for animations
 - **Web Audio API** for sound effects
-- **localStorage** for leaderboard persistence
+- **localStorage** for leaderboard (MongoDB ready)
 
 ## Installation
 
@@ -89,48 +88,30 @@ npm install
 npm run dev
 ```
 
-Open your browser to `http://localhost:5173`
+Open `http://localhost:5173`
 
 ## How to Play
 
 1. Enter phone number, driver name, and car number
 2. Click "START CHAMPIONSHIP"
 3. Click "START LAUNCH" to begin round
-4. **HOLD** space bar or mouse button
-5. Watch the red lights illuminate
+4. Click anywhere to arm clutch (or hold space)
+5. Watch red lights illuminate
 6. Wait for lights to turn GREEN
-7. **RELEASE** immediately when green
+7. Click/release immediately when green
 8. Complete 5 rounds for tournament score
 9. View leaderboard
 
-## Game Rules
+## Visual Improvements Implemented
 
-- Must hold before lights sequence begins
-- Release before green = False Start
-- Reaction times under 80ms rejected (anti-cheat)
-- Tournament invalid if 2+ false starts
-- Perfect launch bonus for sub-200ms reactions
-
-## Project Structure
-
-```
-client/
-├── src/
-│   ├── components/
-│   │   ├── StartForm.jsx          # Player registration
-│   │   ├── GameController.jsx     # Main game state manager
-│   │   ├── StartLights.jsx        # Track scene & timing logic
-│   │   ├── TournamentSummary.jsx  # Results display
-│   │   └── LeaderboardTable.jsx   # Leaderboard UI
-│   ├── hooks/
-│   │   └── useAudio.js            # Audio effects hook
-│   ├── App.jsx                    # Root component
-│   ├── App.css                    # Global styles
-│   ├── index.css                  # Tailwind imports
-│   └── main.jsx                   # Entry point
-├── package.json
-└── vite.config.js
-```
+✅ Lights with depth - Glass lens effect, metallic housing, bloom glow  
+✅ Track texture - Asphalt grain, noise overlay, vignette  
+✅ Car presence - Idle vibration, shadow, heat haze, tire smoke  
+✅ Broadcast overlays - Semi-transparent panels, motorsport typography  
+✅ Immersive instructions - Centered minimal text ("Hold Space to Arm Clutch")  
+✅ Dynamic car number - Uses player's chosen number  
+✅ Camera shake - On perfect launches  
+✅ Enhanced animations - Custom easing, smooth transitions  
 
 ## Performance
 
@@ -140,14 +121,13 @@ client/
 - No memory leaks
 - Mobile compatible
 
-## Future Enhancements (Backend)
+## Future Backend Integration
 
 - Replace localStorage with MongoDB
 - REST API endpoints
 - Server-side validation
 - Global leaderboard
 - Player authentication
-- National flags
 
 ## License
 
