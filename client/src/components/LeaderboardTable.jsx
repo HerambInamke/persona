@@ -51,6 +51,7 @@ const LeaderboardTable = ({ onBack, currentPlayer }) => {
               <thead className="bg-gray-900">
                 <tr>
                   <th className="px-4 py-3 text-left text-sm font-semibold">RANK</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold">PHONE</th>
                   <th className="px-4 py-3 text-left text-sm font-semibold">DRIVER</th>
                   <th className="px-4 py-3 text-left text-sm font-semibold">NUMBER</th>
                   <th className="px-4 py-3 text-left text-sm font-semibold">BEST SINGLE</th>
@@ -63,7 +64,7 @@ const LeaderboardTable = ({ onBack, currentPlayer }) => {
                   <tr
                     key={index}
                     className={`border-t border-gray-700 hover:bg-gray-700 transition-colors ${
-                      entry.name === currentPlayer?.name && entry.number === currentPlayer?.number
+                      entry.phone === currentPlayer?.phone && entry.number === currentPlayer?.number
                         ? 'bg-red-900 bg-opacity-20'
                         : ''
                     }`}
@@ -71,6 +72,7 @@ const LeaderboardTable = ({ onBack, currentPlayer }) => {
                     <td className="px-4 py-3 font-bold text-lg">
                       {index + 1}
                     </td>
+                    <td className="px-4 py-3 text-gray-300">{entry.phone}</td>
                     <td className="px-4 py-3 font-semibold">{entry.name}</td>
                     <td className="px-4 py-3">
                       <span className="inline-block bg-gray-700 px-2 py-1 rounded text-sm">

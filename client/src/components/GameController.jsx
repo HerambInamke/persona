@@ -69,6 +69,7 @@ const GameController = ({ player, onBackToMenu }) => {
       : null;
 
     const entry = {
+      phone: player.phone,
       name: player.name,
       number: player.number,
       difficulty: player.difficulty,
@@ -104,7 +105,7 @@ const GameController = ({ player, onBackToMenu }) => {
           <div>
             <h1 className="text-2xl font-bold tracking-wider">F1 REACTION CHAMPIONSHIP</h1>
             <p className="text-sm text-gray-400 mt-1">
-              {player.name} #{player.number} • CHAOS MODE
+              {player.name} #{player.number} • {player.phone} • CHAOS MODE
             </p>
           </div>
           <button

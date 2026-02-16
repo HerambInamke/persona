@@ -2,15 +2,17 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 
 const StartForm = ({ onSubmit }) => {
+  const [phone, setPhone] = useState('');
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [carNumber, setCarNumber] = useState('');
   const [errors, setErrors] = useState({});
 
   const validate = () => {
     const newErrors = {};
+    if (!phone.trim()) newErrors.phone = 'Phone number is required';
     if (!name.trim()) newErrors.name = 'Driver name is required';
-    if (!number) newErrors.number = 'Car number is required';
-    if (number < 1 || number > 99) newErrors.number = 'Number must be between 1-99';
+    if (!carNumber) newErrors.carNumber = 'Car number is required';
+    if (carNumber < 1 || carNumber > 99) newErrors.carNumber = 'Number must be between 1-99';
     return newErrors;
   };
 
@@ -21,7 +23,12 @@ const StartForm = ({ onSubmit }) => {
       setErrors(newErrors);
       return;
     }
-    onSubmit({ name: name.trim(), number: parseInt(number), difficulty: 'chaos' });
+    onSubmit({ 
+      phone: phone.trim(), 
+      name: name.trim(), 
+      number: parseInt(carNumber), 
+      difficulty: 'chaos' 
+    });
   };
 
   return (
@@ -67,6 +74,20 @@ const StartForm = ({ onSubmit }) => {
         >
           <div className="mb-6">
             <label className="block text-sm font-semibold mb-2 tracking-wide text-gray-300">
+              PHONE NUMBER
+            </label>
+            <input
+              type="tel"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="w-full px-4 py-3 bg-gray-900 border border-gray-600 rounded focus:outline-none focus:border-red-600 text-white"
+              placeholder="Enter your phone number"
+            />
+            {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
+          </div>
+
+          <div className="mb-6">
+            <label className="block text-sm font-semibold mb-2 tracking-wide text-gray-300">
               DRIVER NAME
             </label>
             <input
@@ -85,14 +106,14 @@ const StartForm = ({ onSubmit }) => {
             </label>
             <input
               type="number"
-              value={number}
-              onChange={(e) => setNumber(e.target.value)}
+              value={carNumber}
+              onChange={(e) => setCarNumber(e.target.value)}
               min="1"
               max="99"
               className="w-full px-4 py-3 bg-gray-900 border border-gray-600 rounded focus:outline-none focus:border-red-600 text-white"
               placeholder="1-99"
             />
-            {errors.number && <p className="text-red-500 text-sm mt-1">{errors.number}</p>}
+            {errors.carNumber && <p className="text-red-500 text-sm mt-1">{errors.carNumber}</p>}
           </div>
 
           <motion.button

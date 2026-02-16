@@ -163,88 +163,113 @@ const StartLights = ({ difficulty, onResult }) => {
   }, []);
 
   return (
-    <div className="text-center">
+    <div className="relative w-full h-full flex flex-col">
       <motion.div
         animate={shake ? { x: [0, -5, 5, -5, 5, 0] } : {}}
         transition={{ duration: 0.2 }}
+        className="flex-1 flex flex-col"
       >
-        {/* Status Text */}
-        <div className="mb-12 h-16">
-          {gamePhase === 'countdown' && (
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-2xl text-gray-400 font-semibold tracking-wide"
-            >
-              GET READY...
-            </motion.p>
-          )}
-          {gamePhase === 'waiting' && (
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-2xl text-yellow-500 font-semibold tracking-wide"
-            >
-              WAIT FOR IT...
-            </motion.p>
-          )}
-          {gamePhase === 'go' && (
-            <motion.p
-              initial={{ scale: 0.5, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.2 }}
-              className="text-5xl text-green-400 font-bold tracking-wider"
-            >
-              LIGHTS OUT!
-            </motion.p>
-          )}
-        </div>
-
-        {/* Start Lights */}
-        <div className="flex justify-center gap-6 mb-12">
-          {lights.map((isOn, index) => (
-            <motion.div
-              key={index}
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: index * 0.1 }}
-              className="relative"
-            >
-              <div
-                className={`w-20 h-20 rounded-full border-4 transition-all duration-150 ${
-                  isOn
-                    ? 'bg-red-600 border-red-400 shadow-[0_0_30px_rgba(220,38,38,0.8)]'
-                    : 'bg-gray-800 border-gray-700'
-                }`}
-              />
-              {isOn && (
+        {/* Start Lights - Top Center */}
+        <div className="flex justify-center items-start pt-8 pb-4">
+          <div className="bg-black bg-opacity-60 backdrop-blur-sm px-8 py-6 rounded-lg border-2 border-gray-700">
+            <div className="flex justify-center gap-4 mb-4">
+              {lights.map((isOn, index) => (
                 <motion.div
+                  key={index}
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="relative"
+                >
+                  <div
+                    className={`w-16 h-16 rounded-full border-4 transition-all duration-150 ${
+                      isOn
+                        ? 'bg-red-600 border-red-400 shadow-[0_0_30px_rgba(220,38,38,0.8)]'
+                        : 'bg-gray-800 border-gray-700'
+                    }`}
+                  />
+                  {isOn && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: [0.5, 1, 0.5] }}
+                      transition={{ duration: 1, repeat: Infinity }}
+                      className="absolute inset-0 rounded-full bg-red-500 blur-xl"
+                    />
+                  )}
+                </motion.div>
+              ))}
+            </div>
+            
+            {/* Status Text */}
+            <div className="text-center h-8">
+              {gamePhase === 'countdown' && (
+                <motion.p
                   initial={{ opacity: 0 }}
-                  animate={{ opacity: [0.5, 1, 0.5] }}
-                  transition={{ duration: 1, repeat: Infinity }}
-                  className="absolute inset-0 rounded-full bg-red-500 blur-xl"
-                />
+                  animate={{ opacity: 1 }}
+                  className="text-lg text-gray-400 font-semibold tracking-wide"
+                >
+                  GET READY...
+                </motion.p>
               )}
-            </motion.div>
-          ))}
+              {gamePhase === 'waiting' && (
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="text-lg text-yellow-500 font-semibold tracking-wide"
+                >
+                  WAIT FOR IT...
+                </motion.p>
+              )}
+              {gamePhase === 'go' && (
+                <motion.p
+                  initial={{ scale: 0.5, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.2 }}
+                  className="text-3xl text-green-400 font-bold tracking-wider"
+                >
+                  GO GO GO!
+                </motion.p>
+              )}
+            </div>
+          </div>
         </div>
 
-        {/* Click Area */}
-        {canClick && gamePhase !== 'finished' && (
-          <motion.button
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            onClick={handleClick}
-            className="px-12 py-6 bg-gray-800 bg-opacity-50 border-2 border-gray-600 rounded-lg hover:border-red-600 transition-colors"
-          >
-            <p className="text-xl font-semibold tracking-wide">
-              PRESS SPACE OR CLICK
-            </p>
-          </motion.button>
-        )}
-      </motion.div>
-    </div>
-  );
-};
+        {/* F1 Track */}
+        <div className="flex-1 relative overflow-hidden">
+          {/* Track Background */}
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-700 via-gray-600 to-gray-700">
+            {/* Track Lines */}
+            <div className="absolute inset-0 flex justify-center">
+              {/* Left boundary */}
+              <div className="absolute left-[20%] top-0 bottom-0 w-1 bg-white opacity-80"></div>
+              {/* Right boundary */}
+              <div className="absolute right-[20%] top-0 bottom-0 w-1 bg-white opacity-80"></div>
+              
+              {/* Center dashed line */}
+              <div className="absolute left-1/2 top-0 bottom-0 w-1 flex flex-col gap-8 -translate-x-1/2">
+                {[...Array(20)].map((_, i) => (
+                  <div key={i} className="h-12 bg-white opacity-50"></div>
+                ))}
+              </div>
+            </div>
+
+            {/* Starting Grid Lines */}
+            <div className="absolute bottom-[30%] left-[20%] right-[20%] h-1 bg-white opacity-90"></div>
+            <div className="absolute bottom-[30%] left-[20%] right-[20%]">
+              {[...Array(10)].map((_, i) => (
+                <div
+                  key={i}
+                  className="absolute h-16 w-1 bg-white opacity-60"
+                  style={{ left: `${i * 10}%`, bottom: 0 }}
+                ></div>
+              ))}
+            </div>
+          </div>
+
+          {/* F1 Car */}
+          <motion.div
+            initial={{ y: 0 }}
+            animate={gamePhase === 'go' ? { y: -1000 } : { y: 0 }}
+            transition={{ duration: 2, ease: "easeIn;
 
 export default StartLights;
